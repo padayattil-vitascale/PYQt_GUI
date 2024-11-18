@@ -1,0 +1,60 @@
+import pandas as pd
+
+def Cal_New_delta_2_3(row, coeff):
+    new_delta = row['Old_delta'] - (row['Max_Deviation'] * coeff)
+    return new_delta, coeff
+
+def Calc_coeff_2_3(df):
+    def apply_cal(row):
+        if (row['Distance'] == 200) and (row['Max_Deviation'] > 0.05):
+            return Cal_New_delta_2_3(row, 0.85)
+        elif (row['Distance'] == 200) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] > -0.3)):
+            return Cal_New_delta_2_3(row, 0.65)
+        elif (row['Distance'] == 200) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] < -0.3)):
+            return Cal_New_delta_2_3(row, 0.75)
+        elif (row['Distance'] == 250) and (row['Max_Deviation'] > 0.05):
+            return Cal_New_delta_2_3(row, 0.85)
+        elif (row['Distance'] == 250) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] > -0.3)):
+            return Cal_New_delta_2_3(row, 0.65)
+        elif (row['Distance'] == 250) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] < -0.3)):
+            return Cal_New_delta_2_3(row, 0.75)
+        elif (row['Distance'] == 300) and (row['Max_Deviation'] > 0.05):
+            return Cal_New_delta_2_3(row, 0.85)
+        elif (row['Distance'] == 300) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] > -0.3)):
+            return Cal_New_delta_2_3(row, 0.65)
+        elif (row['Distance'] == 300) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] < -0.3)):
+            return Cal_New_delta_2_3(row, 0.7)
+        elif (row['Distance'] == 350) and (row['Max_Deviation'] > 0.05):
+            return Cal_New_delta_2_3(row, 0.85)
+        elif (row['Distance'] == 350) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] > -0.3)):
+            return Cal_New_delta_2_3(row, 0.65)
+        elif (row['Distance'] == 350) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] < -0.3)):
+            return Cal_New_delta_2_3(row, 0.7)
+        elif (row['Distance'] == 400) and (row['Max_Deviation'] > 0.05):
+            return Cal_New_delta_2_3(row, 0.75)
+        elif (row['Distance'] == 400) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] > -0.3)):
+            return Cal_New_delta_2_3(row, 0.5)
+        elif (row['Distance'] == 400) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] < -0.3)):
+            return Cal_New_delta_2_3(row, 0.6)
+        elif (row['Distance'] == 450) and (row['Max_Deviation'] > 0.05):
+            return Cal_New_delta_2_3(row, 0.75)
+        elif (row['Distance'] == 450) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] > -0.3)):
+            return Cal_New_delta_2_3(row, 0.5)
+        elif (row['Distance'] == 450) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] < -0.3)):
+            return Cal_New_delta_2_3(row, 0.6)
+        elif (row['Distance'] == 500) and (row['Max_Deviation'] > 0.05):
+            return Cal_New_delta_2_3(row, 0.65)
+        elif (row['Distance'] == 500) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] > -0.3)):
+            return Cal_New_delta_2_3(row, 0.5)
+        elif (row['Distance'] == 500) and ((row['Max_Deviation'] < -0.05) and (row['Max_Deviation'] < -0.3)):
+            return Cal_New_delta_2_3(row, 0.5)
+        else:
+            return Cal_New_delta_2_3(row, 1)
+
+    df['New_Delta'], df['Coeff'] = zip(*df.apply(apply_cal, axis=1))
+    return df
+
+# Function to compute max within a window of 100 previous rows
+def compute_max_rolling(series, current_index, window_size):
+    start_index = max(0, current_index - window_size)  # Ensure index doesn't go negative
+    return series[start_index:current_index].max()
