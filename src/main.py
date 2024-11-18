@@ -6,6 +6,7 @@ sys.path.append("C:\\Users\\jeric\\Desktop\\Joyson_decrypted\\Python script\\GUI
 from Correction_Factor_Calculation import *
 from File_handling import *
 from Calc_PPM import *
+from Plot_Graphs import *
 
 from datetime import datetime
 
@@ -107,6 +108,13 @@ class Joyson_prediction(QMainWindow):
         self.PPM_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.PPM_button, alignment=Qt.AlignCenter)
 
+        #display PPM_graph
+        self.Graphs_button = QPushButton('Other_graphs', self)
+        self.Graphs_button.clicked.connect(self.save_graphs)
+        self.Graphs_button.setFixedSize(150,30)
+        self.Graphs_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.Graphs_button, alignment=Qt.AlignCenter)
+
 
         #Display predited PPM
         self.ppm_graph = QLabel(self)
@@ -147,7 +155,6 @@ class Joyson_prediction(QMainWindow):
 
     def correction_factor(self):
         self.df = correction_calculation(self, self.df)
-        print(self.df)
         print('applied correction')
 
     #Display wordcloud
@@ -192,13 +199,21 @@ class Joyson_prediction(QMainWindow):
             # Convert plot to image for display in PyQt widget
             buf = BytesIO()
             plt.savefig(buf, format='png')
+
+            plt.savefig(self.folder_path + 'PPM.png')
+
             plt.close()
             buf.seek(0)
 
             pixmap = QPixmap()
             pixmap.loadFromData(buf.getvalue())
             self.ppm_graph.setPixmap(pixmap)
-       
+    
+    def save_graphs(self):
+        df = self.df
+        folder_path =self.folder_path
+        plot_other_graphs(df, folder_path)
+
     def save_model(self):
         model = self.model
         date = datetime.now()

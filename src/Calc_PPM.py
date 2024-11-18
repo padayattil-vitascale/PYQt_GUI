@@ -2,7 +2,6 @@ import math
 
 def cal_ppm(new_delta: float, constant: float, expo: float) -> float:
     row_new = constant * math.exp(expo * new_delta)
-    print(row_new)
     return row_new
 
 def predict_ppm_on_distance(df):
