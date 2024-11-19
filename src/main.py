@@ -41,7 +41,7 @@ class Joyson_prediction(QMainWindow):
         layout2 = QHBoxLayout()
         layout2a = QHBoxLayout()
         layout3 = QHBoxLayout()
-        #layout4 = QHBoxLayout()
+        layout4 = QHBoxLayout()
 
         #Load folder
         self.load_button = QPushButton('Select File',self)
@@ -63,10 +63,10 @@ class Joyson_prediction(QMainWindow):
         self.CSV_button.clicked.connect(self.convert_data)
         self.CSV_button.setFixedSize(200,30)
         self.CSV_button.setStyleSheet("border: 3px solid black")
-        layout2a.addWidget(self.CSV_button, alignment=Qt.AlignCenter)
+        layout2a.addWidget(self.CSV_button)
 
         self.preprocess_status = QLabel()
-        self.preprocess_status.setAlignment(Qt.AlignCenter)
+        #self.preprocess_status.setAlignment(Qt.AlignCenter)
         self.preprocess_status.setFixedSize(200,20)
         layout2a.addWidget(self.preprocess_status, alignment=Qt.AlignCenter)
 
@@ -91,14 +91,14 @@ class Joyson_prediction(QMainWindow):
         self.distance_button.clicked.connect(self.show_distance)
         self.distance_button.setFixedSize(150,30)
         self.distance_button.setStyleSheet("border: 3px solid black")
-        layout1.addWidget(self.distance_button, alignment=Qt.AlignCenter)
+        layout1.addWidget(self.distance_button)
         
         #Apply correction, predict PPM & Save
         self.correction_button = QPushButton('Apply Ref_2.3 Correction, Predict PPM & Save', self)
         self.correction_button.clicked.connect(self.correction_factor)
         self.correction_button.setFixedSize(250,30)
         self.correction_button.setStyleSheet("border: 3px solid black")
-        layout1.addWidget(self.correction_button, alignment=Qt.AlignCenter)
+        layout1.addWidget(self.correction_button)
 
 
         #display PPM_graph
@@ -106,21 +106,49 @@ class Joyson_prediction(QMainWindow):
         self.PPM_button.clicked.connect(self.show_PPM_graph)
         self.PPM_button.setFixedSize(150,30)
         self.PPM_button.setStyleSheet("border: 3px solid black")
-        layout1.addWidget(self.PPM_button, alignment=Qt.AlignCenter)
+        layout1.addWidget(self.PPM_button)
 
-        #display PPM_graph
+        #Display predited PPM
+        self.ppm_graph = QLabel(self)
+        #self.ppm_graph.setAlignment(Qt.AlignCenter)
+        layout1.addWidget(self.ppm_graph)
+
+        #display PPM_graph button
         self.Graphs_button = QPushButton('Other_graphs', self)
         self.Graphs_button.clicked.connect(self.save_graphs)
         self.Graphs_button.setFixedSize(150,30)
         self.Graphs_button.setStyleSheet("border: 3px solid black")
-        layout1.addWidget(self.Graphs_button, alignment=Qt.AlignCenter)
+        layout1.addWidget(self.Graphs_button)
 
 
+        #Display ethanol vs windspeed
+        self.ws_graph = QLabel(self)
+        #self.ws_graph.setAlignment(Qt.AlignCenter)
+        layout4.addWidget(self.ws_graph)
+
+        #Display ethanol vs acetone
+        self.ace_graph = QLabel(self)
+        #self.ace_graph.setAlignment(Qt.AlignCenter)
+        layout4.addWidget(self.ace_graph)
+
+        #Display ethanol vs acetone
+        self.co2_graph = QLabel(self)
+        #self.co2_graph.setAlignment(Qt.AlignCenter)
+        layout4.addWidget(self.co2_graph)
+
+        layout1.addLayout(layout4, stretch=2)
+
+        """        
+        #Display predited PPM
+        self.ppm_graph = QLabel(self)
+        self.ppm_graph.setAlignment(Qt.AlignCenter)
+        layout1.addWidget(self.ppm_graph)        
+        
         #Display predited PPM
         self.ppm_graph = QLabel(self)
         self.ppm_graph.setAlignment(Qt.AlignCenter)
         layout1.addWidget(self.ppm_graph)
-        
+        """
         """
         #Field to enter a User defined New tweet
         self.prompt = QLineEdit(self)
@@ -164,18 +192,25 @@ class Joyson_prediction(QMainWindow):
             if 'Calculated_PPM' not in df.columns or 'windspeed' not in df.columns:
                 print("Required columns ('PPM' and 'windspeed') are missing from the DataFrame.")
                 return
-
-            fig, ax = plt.subplots(figsize=(8,6))
+            plt.rcParams.update({'font.size': 10})
+            fig, ax = plt.subplots(figsize=(5,5))
             #markerstyles = ['v','o','+','*','.']
-            ax.plot(df['Calculated_PPM'], linewidth=0.5, label='PPM', color='b')    
+        
+            # using rc function
+            #ax.rcParams.update({'font.size': 10})
+            ax.plot(df['PPM_Peak'], linewidth=0.5, label='PPM', color='b', marker = '+')    
             ax.title.set_text('PPM & Windspeed')
-            ax.set_ylabel('PPM predicted')
-            ax.set_xlabel('Samples')
-            ax.set_xticks(df.index)
+            ax.set_ylabel('PPM predicted', fontsize=9)
+            ax.set_xlabel('Samples', fontsize=9)
+            xtick_labels = df.index
+            step = max(1, len(xtick_labels) // 30)  # Adjusting step size
+            ax.set_xticks(xtick_labels[::step])
+            ax.set_xticklabels(xtick_labels[::step], rotation=90, fontsize=7)
 
+            #ax2.rcParams.update({'font.size': 10})
             ax2 = ax.twinx()
             ax2.plot(df['windspeed'], color='r', linewidth=0.5, label='Windspeed')
-            ax2.set_ylabel('Windspeed(m/s)')
+            ax2.set_ylabel('Windspeed(m/s)', fontsize=9)
             lines_1, labels_1 = ax.get_legend_handles_labels()
             lines_2, labels_2 = ax2.get_legend_handles_labels()
 
@@ -185,23 +220,12 @@ class Joyson_prediction(QMainWindow):
             ax.legend(lines, labels, loc='upper center')
             #ax.show()
 
-            """
-            # Plotting
-            plt.figure(figsize=(8, 5))
-            plt.plot(df['Windspeed_Max'], df['PPM'], marker='o', linestyle='-', color='b', label='PPM vs Windspeed_Max')
-            plt.title('PPM vs Windspeed_Max')
-            plt.xlabel('Windspeed_Max')
-            plt.ylabel('PPM')
-            plt.grid(True)
-            plt.legend()
-            plt.tight_layout()
-            """
             # Convert plot to image for display in PyQt widget
             buf = BytesIO()
             plt.savefig(buf, format='png')
 
             plt.savefig(self.folder_path + 'PPM.png')
-
+            plt.tight_layout()
             plt.close()
             buf.seek(0)
 
@@ -212,8 +236,30 @@ class Joyson_prediction(QMainWindow):
     def save_graphs(self):
         df = self.df
         folder_path =self.folder_path
-        plot_other_graphs(df, folder_path)
+        fig_ws, fig_ace, fig_co2 = plot_other_graphs(df, folder_path)
 
+        # Convert plot to image for display in PyQt widget
+        def plt_to_img(fig, widget):
+            buf = BytesIO()
+            fig.savefig(buf, format='png')
+            buf.seek(0)
+
+            pixmap = QPixmap()
+            pixmap.loadFromData(buf.getvalue())
+            widget.setPixmap(pixmap)
+
+        plt_to_img(fig_ws, self.ws_graph)
+        plt_to_img(fig_ace, self.ace_graph)
+        plt_to_img(fig_co2, self.co2_graph)
+        """
+        buf = BytesIO()
+        fig_ws.savefig(buf, format='png')
+        buf.seek(0)
+
+        pixmap = QPixmap()
+        pixmap.loadFromData(buf.getvalue())
+        self.ws_graph.setPixmap(pixmap)
+        """
     def save_model(self):
         model = self.model
         date = datetime.now()

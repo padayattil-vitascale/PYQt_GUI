@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 def Cal_New_delta_2_3(row, coeff):
     new_delta = row['Old_delta'] - (row['Max_Deviation'] * coeff)
@@ -58,3 +59,14 @@ def Calc_coeff_2_3(df):
 def compute_max_rolling(series, current_index, window_size):
     start_index = max(0, current_index - window_size)  # Ensure index doesn't go negative
     return series[start_index:current_index].max()
+
+def compute_peak(series, current_index, window_size):
+    start_index = max(0, current_index - window_size)
+    # Define the end index of the window
+    end_index = min(len(series), current_index + window_size)
+    # Compute the maximum value within the window
+    max_temp = series[start_index:end_index].max()
+    # Get the current value
+    current_value = series[current_index]
+    # Check if the current value is equal to the maximum in the window
+    return current_value if current_value == max_temp else np.nan

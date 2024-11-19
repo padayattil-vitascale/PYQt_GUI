@@ -42,11 +42,10 @@ def add_distance(df, dist):
 
 
 def correction_calculation(parent, DF):
-    # Apply function across all rows and store result in a new column 'Max_Ethanol'
-    DF['Max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['Ethanol'], i, window_size = 100) for i in range(len(DF))]
+    # Apply function across all rows and store result in a new column 'Max'
+    DF['Max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['Ethanol'], i, window_size = 75) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 70 samples
     
-    
-    DF['Windspeed_max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['windspeed'], i, window_size = 80) for i in range(len(DF))]
+    DF['Windspeed_max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['windspeed'], i, window_size = 42) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 35 samples
     
     DF['Min'] = DF['Ethanol']
 
@@ -57,6 +56,8 @@ def correction_calculation(parent, DF):
     DF = Correction_Factor_Calculation.Calc_coeff_2_3(DF)
 
     DF = Calc_PPM.predict_ppm_on_distance(DF)
+
+    DF['PPM_Peak'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM'], i, window_size = 25) for i in range(len(DF))]
     #breakpoint()
 
     # Save the results to an Excel file
