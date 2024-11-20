@@ -6,13 +6,12 @@ import pandas as pd
 
 def plot_other_graphs(df, folder_path):
     def two_axis_line(y1, y2, df, y1_label, y2_label):
-        fig, ax = plt.subplots(figsize=(5,5))
+        fig, ax = plt.subplots(figsize=(6,3.5))
         #markerstyles = ['v','o','+','*','.']
         ax.plot(y1, linewidth=0.5, label=y1_label, color='b')    
         ax.title.set_text(f"{y1_label} Vs {y2_label}")
         ax.set_ylabel(y1_label, fontsize=9)
         ax.set_xlabel('Samples', fontsize=9)
-        
         
         xtick_labels = df.index
         step = max(1, len(xtick_labels) // 30)  # Adjusting step size

@@ -47,7 +47,7 @@ class Joyson_prediction(QMainWindow):
         self.load_button = QPushButton('Select File',self)
         self.load_button.clicked.connect(self.load_file)
         self.load_button.setFixedSize(100, 30)
-        self.load_button.setStyleSheet("border: 3px solid black")
+        #self.load_button.setStyleSheet("border: 3px solid black")
         layout2.addWidget(self.load_button)
 
         self.Load_status = QLabel()
@@ -62,8 +62,8 @@ class Joyson_prediction(QMainWindow):
         self.CSV_button = QPushButton('Convert to CSV Raw',self)
         self.CSV_button.clicked.connect(self.convert_data)
         self.CSV_button.setFixedSize(200,30)
-        self.CSV_button.setStyleSheet("border: 3px solid black")
-        layout2a.addWidget(self.CSV_button)
+        #self.CSV_button.setStyleSheet("border: 3px solid black")
+        layout2a.addWidget(self.CSV_button, alignment= Qt.AlignCenter)
 
         self.preprocess_status = QLabel()
         #self.preprocess_status.setAlignment(Qt.AlignCenter)
@@ -81,7 +81,7 @@ class Joyson_prediction(QMainWindow):
         self.distance_options = QComboBox(self)
         self.distance_options.addItems(["200", "250", "300", "350", "400", "450", "500"])
         #self.distance_options.setFixedSize(200,30)
-        self.distance_options.setStyleSheet("border: 3px solid black")
+        #self.distance_options.setStyleSheet("border: 3px solid black")
         layout3.addWidget(self.distance_options)
         
         layout1.addLayout(layout3, stretch=2)
@@ -90,35 +90,35 @@ class Joyson_prediction(QMainWindow):
         self.distance_button = QPushButton('Add_distance', self)
         self.distance_button.clicked.connect(self.show_distance)
         self.distance_button.setFixedSize(150,30)
-        self.distance_button.setStyleSheet("border: 3px solid black")
-        layout1.addWidget(self.distance_button)
+        #self.distance_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.distance_button, alignment= Qt.AlignCenter)
         
         #Apply correction, predict PPM & Save
-        self.correction_button = QPushButton('Apply Ref_2.3 Correction, Predict PPM & Save', self)
+        self.correction_button = QPushButton('Apply Delta_Correction, Predict PPM and Save', self)
         self.correction_button.clicked.connect(self.correction_factor)
         self.correction_button.setFixedSize(250,30)
-        self.correction_button.setStyleSheet("border: 3px solid black")
-        layout1.addWidget(self.correction_button)
+        #self.correction_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.correction_button, alignment= Qt.AlignCenter)
 
 
         #display PPM_graph
         self.PPM_button = QPushButton('PPM_graph', self)
         self.PPM_button.clicked.connect(self.show_PPM_graph)
         self.PPM_button.setFixedSize(150,30)
-        self.PPM_button.setStyleSheet("border: 3px solid black")
-        layout1.addWidget(self.PPM_button)
+        #self.PPM_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.PPM_button, alignment= Qt.AlignCenter)
 
         #Display predited PPM
         self.ppm_graph = QLabel(self)
-        #self.ppm_graph.setAlignment(Qt.AlignCenter)
+        self.ppm_graph.setAlignment(Qt.AlignCenter)
         layout1.addWidget(self.ppm_graph)
 
         #display PPM_graph button
         self.Graphs_button = QPushButton('Other_graphs', self)
         self.Graphs_button.clicked.connect(self.save_graphs)
         self.Graphs_button.setFixedSize(150,30)
-        self.Graphs_button.setStyleSheet("border: 3px solid black")
-        layout1.addWidget(self.Graphs_button)
+        #self.Graphs_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.Graphs_button, alignment= Qt.AlignCenter)
 
 
         #Display ethanol vs windspeed
@@ -189,18 +189,19 @@ class Joyson_prediction(QMainWindow):
     def show_PPM_graph(self):
             df = self.df
             # Ensure necessary columns are present
-            if 'Calculated_PPM' not in df.columns or 'windspeed' not in df.columns:
+            if 'Calculated_PPM_Ref_2.3' not in df.columns or 'windspeed' not in df.columns:
                 print("Required columns ('PPM' and 'windspeed') are missing from the DataFrame.")
                 return
             plt.rcParams.update({'font.size': 10})
-            fig, ax = plt.subplots(figsize=(5,5))
+            fig, ax = plt.subplots(figsize=(6,3.5))
             #markerstyles = ['v','o','+','*','.']
         
             # using rc function
             #ax.rcParams.update({'font.size': 10})
-            ax.plot(df['PPM_Peak'], linewidth=0.5, label='PPM', color='b', marker = '+')    
-            ax.title.set_text('PPM & Windspeed')
-            ax.set_ylabel('PPM predicted', fontsize=9)
+            ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=0.5, label='PPM_Ref_2.3', color='b', marker = '+')
+            ax.plot(df['PPM_Peak_Ref_3'], linewidth=0.5, label='PPM_Ref_3', color='g', marker = 'o')    
+            ax.title.set_text('PPM_Peaks_Ref_2.3, PPM_Peaks_Ref_3 & Windspeed')
+            ax.set_ylabel('PPM Calculated', fontsize=9)
             ax.set_xlabel('Samples', fontsize=9)
             xtick_labels = df.index
             step = max(1, len(xtick_labels) // 30)  # Adjusting step size
@@ -222,7 +223,7 @@ class Joyson_prediction(QMainWindow):
 
             # Convert plot to image for display in PyQt widget
             buf = BytesIO()
-            plt.savefig(buf, format='png')
+            plt.savefig(buf, format='png', bbox_inches='tight')
 
             plt.savefig(self.folder_path + 'PPM.png')
             plt.tight_layout()
@@ -241,7 +242,7 @@ class Joyson_prediction(QMainWindow):
         # Convert plot to image for display in PyQt widget
         def plt_to_img(fig, widget):
             buf = BytesIO()
-            fig.savefig(buf, format='png')
+            fig.savefig(buf, format='png', bbox_inches='tight')
             buf.seek(0)
 
             pixmap = QPixmap()
@@ -251,23 +252,6 @@ class Joyson_prediction(QMainWindow):
         plt_to_img(fig_ws, self.ws_graph)
         plt_to_img(fig_ace, self.ace_graph)
         plt_to_img(fig_co2, self.co2_graph)
-        """
-        buf = BytesIO()
-        fig_ws.savefig(buf, format='png')
-        buf.seek(0)
-
-        pixmap = QPixmap()
-        pixmap.loadFromData(buf.getvalue())
-        self.ws_graph.setPixmap(pixmap)
-        """
-    def save_model(self):
-        model = self.model
-        date = datetime.now()
-        model_name = re.sub(r'[(){}<>]', '', str(model))
-        file_name = f'C://Users//Vivupadi//Desktop//Sentiment Analysis//models//{(model_name)}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.pkl'
-        #with open(file_name, 'wb') as f:
-        joblib.dump(model, file_name)
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
