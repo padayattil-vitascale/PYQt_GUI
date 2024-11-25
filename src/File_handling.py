@@ -52,7 +52,7 @@ def correction_calculation(parent, DF):
     # Apply function across all rows and store result in a new column 'Max'
     DF['Max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['Ethanol'], i, window_size = 75) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 70 samples
     
-    DF['Windspeed_max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['windspeed'], i, window_size = 42) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 35 samples
+    DF['Windspeed_max_filtered'] = [Correction_Factor_Calculation.compute_max_rolling(DF['filtered_windspeed'], i, window_size = 42) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 35 samples
     
     DF['Min'] = DF['Ethanol']
     DF['Old_delta'] = DF['Max'] - DF['Min']
@@ -62,8 +62,8 @@ def correction_calculation(parent, DF):
     DF = Correction_Factor_Calculation.Calc_coeff_2_3(DF)
     DF = Correction_Factor_Calculation.Calc_coeff_3(DF)
     DF = Calc_PPM.predict_ppm_on_distance(DF)               #PPM calculation for both references
-    DF['PPM_Peak_Ref_2.3'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM_Ref_2.3'], DF['New_Delta_Ref_2.3'], DF['Windspeed_max'], i, window_size = 25) for i in range(len(DF))]
-    DF['PPM_Peak_Ref_3'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM_Ref_3'], DF['New_Delta_Ref_3'], DF['Windspeed_max'], i, window_size = 25) for i in range(len(DF))]
+    DF['PPM_Peak_Ref_2.3'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM_Ref_2.3'], DF['New_Delta_Ref_2.3'], DF['Windspeed_max_filtered'], i, window_size = 25) for i in range(len(DF))]
+    DF['PPM_Peak_Ref_3'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM_Ref_3'], DF['New_Delta_Ref_3'], DF['Windspeed_max_filtered'], i, window_size = 25) for i in range(len(DF))]
     #breakpoint()
 
     # Save the results to an Excel file
