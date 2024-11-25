@@ -118,7 +118,7 @@ def compute_max_rolling(series, current_index, window_size):
     start_index = max(0, current_index - window_size)  # Ensure index doesn't go negative
     return series[start_index:current_index].max()
 
-def compute_peak(series, delta_series, current_index, window_size):
+def compute_peak(series, delta_series, windspeed_series, current_index, window_size):
     start_index = max(0, current_index - window_size)
     # Define the end index of the window
     end_index = min(len(series), current_index + window_size)
@@ -127,5 +127,6 @@ def compute_peak(series, delta_series, current_index, window_size):
     # Get the current value
     current_value = series[current_index]
     delta_condition_value = delta_series[current_index]
+    windspeed_condition_value = windspeed_series[current_index]
     # Check if the current value is equal to the maximum in the window
-    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) else np.nan
+    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.05) else np.nan

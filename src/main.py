@@ -7,6 +7,7 @@ from Correction_Factor_Calculation import *
 from File_handling import *
 from Calc_PPM import *
 from Plot_Graphs import *
+from Low_pass_filter import *
 
 from datetime import datetime
 
@@ -92,6 +93,13 @@ class Joyson_prediction(QMainWindow):
         self.distance_button.setFixedSize(150,30)
         #self.distance_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.distance_button, alignment= Qt.AlignCenter)
+
+        #display PPM_graph button
+        self.filter_button = QPushButton('Filter_acetone', self)
+        self.filter_button.clicked.connect(self.filter_acetone_and_windspeed)
+        self.filter_button.setFixedSize(150,30)
+        #self.Graphs_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.filter_button, alignment= Qt.AlignCenter)
         
         #Apply correction, predict PPM & Save
         self.correction_button = QPushButton('Apply Delta_Correction, Predict PPM and Save', self)
@@ -119,7 +127,6 @@ class Joyson_prediction(QMainWindow):
         self.Graphs_button.setFixedSize(150,30)
         #self.Graphs_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.Graphs_button, alignment= Qt.AlignCenter)
-
 
         #Display ethanol vs windspeed
         self.ws_graph = QLabel(self)
@@ -184,6 +191,11 @@ class Joyson_prediction(QMainWindow):
     def correction_factor(self):
         self.df = correction_calculation(self, self.df)
         print('applied correction')
+
+    def filter_acetone_and_windspeed(self):
+      self.df = apply_low_pass_filter(self.df)
+      print('Acetone & windspeed filtered')
+
 
     #Display wordcloud
     def show_PPM_graph(self):
