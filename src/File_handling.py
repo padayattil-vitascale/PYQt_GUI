@@ -52,8 +52,9 @@ def correction_calculation(parent, DF):
     # Apply function across all rows and store result in a new column 'Max'
     DF['Max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['Ethanol'], i, window_size = 75) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 70 samples
     
-    DF['Windspeed_max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['windspeed'], i, window_size = 42) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 35 samples
-    
+    DF['Windspeed_max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['windspeed'], i, window_size = 42) for i in range(len(DF))]    #Set the rolling window to selec the MAx out of last 35 samples
+    DF['Windspeed_max'] = DF['Windspeed_max'] + 0.05
+
     DF['Min'] = DF['Ethanol']
     DF['Old_delta'] = DF['Max'] - DF['Min']
 

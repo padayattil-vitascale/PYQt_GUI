@@ -4,7 +4,7 @@ import numpy as np
 #Function to calculate
 
 def Cal_New_delta_2_3(row, coeff):
-    new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_2.3'] * coeff)
+    new_delta = (row['Old_delta'] - (row['Max_Deviation_Ref_2.3'] * coeff)) +0.05
     return new_delta, coeff
 
 def Calc_coeff_2_3(df):
@@ -60,7 +60,7 @@ def Calc_coeff_2_3(df):
 #Function to calculate New_Delta based on reference of Ethanol_Max of 3 V
 
 def Cal_New_delta_3(row, coeff):
-    new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_3'] * coeff)
+    new_delta = (row['Old_delta'] - (row['Max_Deviation_Ref_3'] * coeff)) + 0.05
     return new_delta, coeff
 
 def Calc_coeff_3(df):
