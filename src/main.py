@@ -210,8 +210,8 @@ class Joyson_prediction(QMainWindow):
         
             # using rc function
             #ax.rcParams.update({'font.size': 10})
-            ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=0.5, label='PPM_Ref_2.3', color='b', marker = '+')
-            ax.plot(df['PPM_Peak_Ref_3'], linewidth=0.5, label='PPM_Ref_3', color='g', marker = 'o')    
+            ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=0.5, label='PPM_Ref_2.3', color='b', marker = '*')
+            ax.plot(df['PPM_Peak_Ref_3'], linewidth=0.5, label='PPM_Ref_3', color='g', marker = '+')    
             ax.title.set_text('PPM_Peaks_Ref_2.3, PPM_Peaks_Ref_3 & Windspeed')
             ax.set_ylabel('PPM Calculated', fontsize=9)
             ax.set_xlabel('Samples', fontsize=9)
@@ -230,7 +230,7 @@ class Joyson_prediction(QMainWindow):
             lines = lines_1 + lines_2
             labels = labels_1 + labels_2
 
-            ax.legend(lines, labels, loc='upper center')
+            ax.legend(lines, labels, loc='upper right')
             #ax.show()
 
             # Convert plot to image for display in PyQt widget
