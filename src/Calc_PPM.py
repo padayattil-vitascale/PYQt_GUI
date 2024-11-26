@@ -5,7 +5,6 @@ def cal_ppm(new_delta: float, constant: float, expo: float) -> float:
     return row_new
 
 def predict_ppm_on_distance(df):
-
     #Function to calculate PPM based on the Max deviation reference 2.3
     def apply_cal_PPM_2_3(row):
         const = 0
@@ -88,7 +87,7 @@ def predict_ppm_on_distance(df):
         ppm_2_3 = cal_ppm(new_delta=row['New_Delta_Ref_2.3'], constant=const, expo=expo)
 
         return ppm_2_3
-    
+
     #Function to calculate PPM based on the Max deviation reference 3
     def apply_cal_PPM_3(row):
         const = 0

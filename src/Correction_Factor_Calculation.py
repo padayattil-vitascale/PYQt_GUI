@@ -9,44 +9,58 @@ def Cal_New_delta_2_3(row, coeff):
 
 def Calc_coeff_2_3(df):
     def apply_cal(row):
-        if (row['Distance'] == 200) and (row['Max_Deviation_Ref_2.3'] > 0.05):
+        if (row['Distance'] == 200) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] < 0.3)):
             return Cal_New_delta_2_3(row, 0.85)
+        elif (row['Distance'] == 200) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] > 0.3)):
+            return Cal_New_delta_2_3(row, 0.75)
         elif (row['Distance'] == 200) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] > -0.3)):
             return Cal_New_delta_2_3(row, 0.65)
         elif (row['Distance'] == 200) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] < -0.3)):
             return Cal_New_delta_2_3(row, 0.75)
-        elif (row['Distance'] == 250) and (row['Max_Deviation_Ref_2.3'] > 0.05):
+        elif (row['Distance'] == 250) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] < 0.3)):
             return Cal_New_delta_2_3(row, 0.85)
+        elif (row['Distance'] == 250) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] > 0.3)):
+            return Cal_New_delta_2_3(row, 0.75)
         elif (row['Distance'] == 250) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] > -0.3)):
             return Cal_New_delta_2_3(row, 0.65)
         elif (row['Distance'] == 250) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] < -0.3)):
             return Cal_New_delta_2_3(row, 0.75)
-        elif (row['Distance'] == 300) and (row['Max_Deviation_Ref_2.3'] > 0.05):
+        elif (row['Distance'] == 300) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] < 0.3)):
             return Cal_New_delta_2_3(row, 0.85)
+        elif (row['Distance'] == 300) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] > 0.3)):
+            return Cal_New_delta_2_3(row, 0.7)
         elif (row['Distance'] == 300) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] > -0.3)):
             return Cal_New_delta_2_3(row, 0.65)
         elif (row['Distance'] == 300) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] < -0.3)):
             return Cal_New_delta_2_3(row, 0.7)
-        elif (row['Distance'] == 350) and (row['Max_Deviation_Ref_2.3'] > 0.05):
+        elif (row['Distance'] == 350) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] < 0.3)):
             return Cal_New_delta_2_3(row, 0.85)
+        elif (row['Distance'] == 350) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] > 0.3)):
+            return Cal_New_delta_2_3(row, 0.7)
         elif (row['Distance'] == 350) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] > -0.3)):
             return Cal_New_delta_2_3(row, 0.65)
         elif (row['Distance'] == 350) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] < -0.3)):
             return Cal_New_delta_2_3(row, 0.7)
-        elif (row['Distance'] == 400) and (row['Max_Deviation_Ref_2.3'] > 0.05):
+        elif (row['Distance'] == 400) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] < 0.3)):
             return Cal_New_delta_2_3(row, 0.75)
+        elif (row['Distance'] == 400) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] > 0.3)):
+            return Cal_New_delta_2_3(row, 0.6)
         elif (row['Distance'] == 400) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] > -0.3)):
             return Cal_New_delta_2_3(row, 0.5)
         elif (row['Distance'] == 400) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] < -0.3)):
             return Cal_New_delta_2_3(row, 0.6)
-        elif (row['Distance'] == 450) and (row['Max_Deviation_Ref_2.3'] > 0.05):
+        elif (row['Distance'] == 450) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] < 0.3)):
             return Cal_New_delta_2_3(row, 0.75)
+        elif (row['Distance'] == 450) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] > 0.3)):
+            return Cal_New_delta_2_3(row, 0.6)
         elif (row['Distance'] == 450) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] > -0.3)):
             return Cal_New_delta_2_3(row, 0.5)
         elif (row['Distance'] == 450) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] < -0.3)):
             return Cal_New_delta_2_3(row, 0.6)
-        elif (row['Distance'] == 500) and (row['Max_Deviation_Ref_2.3'] > 0.05):
+        elif (row['Distance'] == 500) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] < 0.3)):
             return Cal_New_delta_2_3(row, 0.65)
+        elif (row['Distance'] == 500) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] > 0.3)):
+            return Cal_New_delta_2_3(row, 0.5)
         elif (row['Distance'] == 500) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] > -0.3)):
             return Cal_New_delta_2_3(row, 0.5)
         elif (row['Distance'] == 500) and ((row['Max_Deviation_Ref_2.3'] < -0.05) and (row['Max_Deviation_Ref_2.3'] < -0.3)):
@@ -65,44 +79,58 @@ def Cal_New_delta_3(row, coeff):
 
 def Calc_coeff_3(df):
     def apply_cal(row):
-        if (row['Distance'] == 200) and (row['Max_Deviation_Ref_3'] > 0.1):
+        if (row['Distance'] == 200) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] < 0.3)):
             return Cal_New_delta_3(row, 0.85)
+        elif (row['Distance'] == 200) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] > 0.3)):
+            return Cal_New_delta_3(row, 0.75)
         elif (row['Distance'] == 200) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] > -0.3)):
             return Cal_New_delta_3(row, 0.65)
         elif (row['Distance'] == 200) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] < -0.3)):
             return Cal_New_delta_3(row, 0.75)
-        elif (row['Distance'] == 250) and (row['Max_Deviation_Ref_3'] > 0.1):
+        elif (row['Distance'] == 250) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] < 0.3)):
             return Cal_New_delta_3(row, 0.85)
+        elif (row['Distance'] == 250) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] > 0.3)):
+            return Cal_New_delta_3(row, 0.75)
         elif (row['Distance'] == 250) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] > -0.3)):
             return Cal_New_delta_3(row, 0.65)
         elif (row['Distance'] == 250) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] < -0.3)):
             return Cal_New_delta_3(row, 0.75)
-        elif (row['Distance'] == 300) and (row['Max_Deviation_Ref_3'] > 0.1):
+        elif (row['Distance'] == 300) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] < 0.3)):
             return Cal_New_delta_3(row, 0.85)
+        elif (row['Distance'] == 300) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] > 0.3)):
+            return Cal_New_delta_3(row, 0.7)
         elif (row['Distance'] == 300) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] > -0.3)):
             return Cal_New_delta_3(row, 0.65)
         elif (row['Distance'] == 300) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] < -0.3)):
             return Cal_New_delta_3(row, 0.7)
-        elif (row['Distance'] == 350) and (row['Max_Deviation_Ref_3'] > 0.1):
+        elif (row['Distance'] == 350) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] < 0.3)):
             return Cal_New_delta_3(row, 0.85)
+        elif (row['Distance'] == 350) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] > 0.3)):
+            return Cal_New_delta_3(row, 0.7)
         elif (row['Distance'] == 350) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] > -0.3)):
             return Cal_New_delta_3(row, 0.65)
         elif (row['Distance'] == 350) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] < -0.3)):
             return Cal_New_delta_3(row, 0.7)
-        elif (row['Distance'] == 400) and (row['Max_Deviation_Ref_3'] > 0.1):
+        elif (row['Distance'] == 400) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] < 0.3)):
             return Cal_New_delta_3(row, 0.75)
+        elif (row['Distance'] == 400) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] > 0.3)):
+            return Cal_New_delta_3(row, 0.6)
         elif (row['Distance'] == 400) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] > -0.3)):
             return Cal_New_delta_3(row, 0.5)
         elif (row['Distance'] == 400) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] < -0.3)):
             return Cal_New_delta_3(row, 0.6)
-        elif (row['Distance'] == 450) and (row['Max_Deviation_Ref_3'] > 0.1):
+        elif (row['Distance'] == 450) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] < 0.3)):
             return Cal_New_delta_3(row, 0.75)
+        elif (row['Distance'] == 450) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] > 0.3)):
+            return Cal_New_delta_3(row, 0.6)
         elif (row['Distance'] == 450) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] > -0.3)):
             return Cal_New_delta_3(row, 0.5)
         elif (row['Distance'] == 450) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] < -0.3)):
             return Cal_New_delta_3(row, 0.6)
-        elif (row['Distance'] == 500) and (row['Max_Deviation_Ref_3'] > 0.1):
+        elif (row['Distance'] == 500) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] < 0.3)):
             return Cal_New_delta_3(row, 0.65)
+        elif (row['Distance'] == 500) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] > 0.3)):
+            return Cal_New_delta_3(row, 0.5)
         elif (row['Distance'] == 500) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] > -0.3)):
             return Cal_New_delta_3(row, 0.5)
         elif (row['Distance'] == 500) and ((row['Max_Deviation_Ref_3'] < -0.1) and (row['Max_Deviation_Ref_3'] < -0.3)):
