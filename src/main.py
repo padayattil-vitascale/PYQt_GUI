@@ -54,7 +54,7 @@ class Joyson_prediction(QMainWindow):
         self.Load_status = QLabel()
         self.Load_status.setText('Select File')
         #self.Load_status.setAlignment(Qt.AlignCenter)
-        self.Load_status.setFixedSize(100,20)
+        self.Load_status.setFixedSize(700,20)
         layout2.addWidget(self.Load_status)
 
         layout1.addLayout(layout2)
@@ -175,7 +175,7 @@ class Joyson_prediction(QMainWindow):
             QMessageBox.critical(self, "Error", "Please select a folder first.")
         elif self.folder_path:
             self.data = load_data(self.folder_path)
-            self.Load_status.setText('File Selected')
+            self.Load_status.setText(f'file:{self.folder_path}')
         
     def convert_data(self):
         self.preprocess_status.setText('Conversion in Progress....')
