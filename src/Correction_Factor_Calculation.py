@@ -3,9 +3,9 @@ import numpy as np
 
 #Function to calculate
 
-def Cal_New_delta_2_3(row, coeff):
-    new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_2.3'] * coeff)
-    return new_delta, coeff
+def Cal_New_delta_2_3(row, coeff_2_3):
+    new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_2.3'] * coeff_2_3)
+    return new_delta, coeff_2_3
 
 def Calc_coeff_2_3(df):
     def apply_cal(row):
@@ -54,14 +54,14 @@ def Calc_coeff_2_3(df):
         else:
             return Cal_New_delta_2_3(row, 1)
 
-    df['New_Delta_Ref_2.3'], df['Coeff'] = zip(*df.apply(apply_cal, axis=1))
+    df['New_Delta_Ref_2.3'], df['Coeff_2.3'] = zip(*df.apply(apply_cal, axis=1))
     return df
 
 #Function to calculate New_Delta based on reference of Ethanol_Max of 3 V
 
-def Cal_New_delta_3(row, coeff):
-    new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_3'] * coeff)
-    return new_delta, coeff
+def Cal_New_delta_3(row, coeff_3):
+    new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_3'] * coeff_3)
+    return new_delta, coeff_3
 
 def Calc_coeff_3(df):
     def apply_cal(row):
@@ -110,7 +110,7 @@ def Calc_coeff_3(df):
         else:
             return Cal_New_delta_3(row, 1)
 
-    df['New_Delta_Ref_3'], df['Coeff'] = zip(*df.apply(apply_cal, axis=1))
+    df['New_Delta_Ref_3'], df['Coeff_3'] = zip(*df.apply(apply_cal, axis=1))
     return df
 
 # Function to compute max within a window of 100 previous rows
