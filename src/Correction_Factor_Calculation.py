@@ -129,4 +129,4 @@ def compute_peak(series, delta_series, windspeed_series, current_index, window_s
     delta_condition_value = delta_series[current_index]
     windspeed_condition_value = windspeed_series[current_index]
     # Check if the current value is equal to the maximum in the window
-    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.05) else np.nan
+    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.02) else np.nan
