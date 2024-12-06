@@ -27,7 +27,7 @@ def plot_other_graphs(df, folder_path):
         lines = lines_1 + lines_2
         labels = labels_1 + labels_2
 
-        ax.legend(lines, labels, loc='upper center')
+        ax.legend(lines, labels, loc='upper right', bbox_to_anchor=(1.2, 1.05))
 
         plt.savefig(os.path.join(folder_path, f'{y1_label} VS {y2_label}.png'))
         fig = ax.get_figure()
@@ -39,6 +39,7 @@ def plot_other_graphs(df, folder_path):
     fig_ace = two_axis_line(df['Ethanol'], df['Acethone'], df, y1_label= 'Ethanol' , y2_label = 'Acetone')
     two_axis_line(df['Ethanol'], df['temperature'], df, y1_label= 'Ethanol' , y2_label = 'Temperature')
     two_axis_line(df['Ethanol'], df['humidity'], df, y1_label= 'Ethanol' , y2_label = 'Humidity')
+    two_axis_line(df['windspeed'], df['windspeed_corr'], df, y1_label= 'Windspeed' , y2_label = 'Corrected_windspeed')
     fig_co2 = two_axis_line(df['Ethanol'], df['CO2'], df, y1_label= 'Ethanol' , y2_label = 'CO2')
 
     return fig_ws, fig_ace, fig_co2

@@ -8,10 +8,9 @@ from File_handling import *
 from Calc_PPM import *
 from Plot_Graphs import *
 from Low_pass_filter import *
+from windspeed_correction import *
 
 from datetime import datetime
-
-import joblib
 
 
 import sys
@@ -95,8 +94,15 @@ class Joyson_prediction(QMainWindow):
         layout1.addWidget(self.distance_button, alignment= Qt.AlignCenter)
 
         #display PPM_graph button
-        self.filter_button = QPushButton('Filter_acetone & Windspeed', self)
+        self.filter_button = QPushButton('Filter_acetone', self)
         self.filter_button.clicked.connect(self.filter_acetone_and_windspeed)
+        self.filter_button.setFixedSize(150,30)
+        #self.Graphs_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.filter_button, alignment= Qt.AlignCenter)
+
+        #Button to correct Windspeed
+        self.filter_button = QPushButton('Correct_Windspeed', self)
+        self.filter_button.clicked.connect(self.corrected_windspeed)
         self.filter_button.setFixedSize(150,30)
         #self.Graphs_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.filter_button, alignment= Qt.AlignCenter)
@@ -196,6 +202,10 @@ class Joyson_prediction(QMainWindow):
       self.df = apply_low_pass_filter(self.df)
       print('Acetone & windspeed filtered')
 
+    def corrected_windspeed(self):
+      self.df = windspeed_corr(self.df)
+      print('Windspeed_corrected')
+
 
     #Display wordcloud
     def show_PPM_graph(self):
@@ -230,7 +240,7 @@ class Joyson_prediction(QMainWindow):
             lines = lines_1 + lines_2
             labels = labels_1 + labels_2
 
-            ax.legend(lines, labels, loc='upper right')
+            ax.legend(lines, labels, loc='upper right', bbox_to_anchor=(1.2, 1.05))
             #ax.show()
 
             # Convert plot to image for display in PyQt widget

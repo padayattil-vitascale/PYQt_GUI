@@ -68,7 +68,7 @@ def Calc_coeff_2_3(df):
         else:
             return Cal_New_delta_2_3(row, 1)
 
-    df['New_Delta_Ref_2.3'], df['Coeff_2_3'] = zip(*df.apply(apply_cal, axis=1))
+    df['New_Delta_Ref_2.3'], df['Coeff'] = zip(*df.apply(apply_cal, axis=1))
     return df
 
 #Function to calculate New_Delta based on reference of Ethanol_Max of 3 V
@@ -157,4 +157,4 @@ def compute_peak(series, delta_series, windspeed_series, current_index, window_s
     delta_condition_value = delta_series[current_index]
     windspeed_condition_value = windspeed_series[current_index]
     # Check if the current value is equal to the maximum in the window
-    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.01) else np.nan
+    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.05) else np.nan
