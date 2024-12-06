@@ -52,7 +52,7 @@ def correction_calculation(parent, DF):
     # Apply function across all rows and store result in a new column 'Max'
     DF['Max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['Ethanol'], i, window_size = 75) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 70 samples
     
-    DF['Windspeed_max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['windspeed'], i, window_size = 42) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 35 samples
+    DF['Windspeed_max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['windspeed_corr'], i, window_size = 42) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 35 samples
     
     DF['Min'] = DF['Ethanol']
     DF['Old_delta'] = DF['Max'] - DF['Min']
@@ -79,5 +79,5 @@ def correction_calculation(parent, DF):
 
 def apply_low_pass_filter(df):
     df['filtered_Acethone'] = Low_pass_filter.low_pass_filtered(df['Acethone'])
-    df['filtered_windspeed'] = Low_pass_filter.low_pass_filtered(df['windspeed'])
+    df['filtered_windspeed'] = Low_pass_filter.low_pass_filtered(df['windspeed'])   #Caution if windspeed has to be filtered, first filter the windpseed and then apply the correction
     return df
