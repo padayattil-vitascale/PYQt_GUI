@@ -27,7 +27,7 @@ def plot_other_graphs(df, folder_path):
         lines = lines_1 + lines_2
         labels = labels_1 + labels_2
 
-        ax.legend(lines, labels, loc='upper center')
+        ax.legend(lines, labels, loc='upper right', bbox_to_anchor=(1.2, 1.05))
 
         plt.savefig(os.path.join(folder_path, f'{y1_label} VS {y2_label}.png'))
         fig = ax.get_figure()

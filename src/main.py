@@ -204,7 +204,7 @@ class Joyson_prediction(QMainWindow):
 
     def corrected_windspeed(self):
       self.df = windspeed_corr(self.df)
-      print('Windspeed_corr')
+      print('Windspeed_corrected')
 
 
     #Display wordcloud
@@ -240,7 +240,7 @@ class Joyson_prediction(QMainWindow):
             lines = lines_1 + lines_2
             labels = labels_1 + labels_2
 
-            ax.legend(lines, labels, loc='upper center')
+            ax.legend(lines, labels, loc='upper right', bbox_to_anchor=(1.2, 1.05))
             #ax.show()
 
             # Convert plot to image for display in PyQt widget

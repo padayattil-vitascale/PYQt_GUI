@@ -12,26 +12,47 @@
 
 def windspeed_corr(df):
     def apply_corr(row):
-        if row['Distance'] ==200:
+        if row['Distance'] ==200 and row['windspeed'] > 0.2:
             row['windspeed_corr'] = 1.7437*pow(row['windspeed'], 1.2998)
             return row['windspeed_corr']
-        if row['Distance'] ==250:
+        if row['Distance'] ==200 and row['windspeed'] <= 0.2:
+            row['windspeed_corr'] = row['windspeed']
+            return row['windspeed_corr']
+        elif row['Distance'] ==250 and row['windspeed'] > 0.16:
             row['windspeed_corr'] = 1.719*pow(row['windspeed'], 1.3351)
             return row['windspeed_corr']
-        if row['Distance'] ==300:
+        elif row['Distance'] ==250 and row['windspeed'] <= 0.16:
+            row['windspeed_corr'] = row['windspeed']
+            return row['windspeed_corr']
+        elif row['Distance'] ==300 and row['windspeed'] > 0.13:
             row['windspeed_corr'] = 1.6498*pow(row['windspeed'], 1.2803)
             return row['windspeed_corr']
-        if row['Distance'] ==350:
+        elif row['Distance'] ==300 and row['windspeed'] <= 0.13:
+            row['windspeed_corr'] = row['windspeed']
+            return row['windspeed_corr']
+        elif row['Distance'] ==350 and row['windspeed'] > 0.11:
             row['windspeed_corr'] = 1.7159*pow(row['windspeed'], 1.2958)
             return row['windspeed_corr']
-        if row['Distance'] ==400:
+        elif row['Distance'] ==350 and row['windspeed'] <= 0.11:
+            row['windspeed_corr'] = row['windspeed']
+            return row['windspeed_corr']
+        elif row['Distance'] ==400 and row['windspeed'] > 0.1:
             row['windspeed_corr'] = 1.6229*pow(row['windspeed'], 1.251)
             return row['windspeed_corr']
-        if row['Distance'] ==450:
+        elif row['Distance'] ==400 and row['windspeed'] <= 0.1:
+            row['windspeed_corr'] = row['windspeed']
+            return row['windspeed_corr']
+        elif row['Distance'] ==450 and row['windspeed'] > 0.09:
             row['windspeed_corr'] = 1.4935*pow(row['windspeed'], 1.1701)
             return row['windspeed_corr']
-        if row['Distance'] ==500:
+        elif row['Distance'] ==450 and row['windspeed'] <= 0.09:
+            row['windspeed_corr'] = row['windspeed']
+            return row['windspeed_corr']
+        elif row['Distance'] ==500 and row['windspeed'] > 0.08:
             row['windspeed_corr'] = 1.8564*pow(row['windspeed'], 1.3472)
+            return row['windspeed_corr']
+        elif row['Distance'] ==500 and row['windspeed'] <= 0.08:
+            row['windspeed_corr'] = row['windspeed']
             return row['windspeed_corr']
 
 
