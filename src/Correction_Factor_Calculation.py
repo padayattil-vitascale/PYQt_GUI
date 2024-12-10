@@ -68,7 +68,7 @@ def Calc_coeff_2_3(df):
         else:
             return Cal_New_delta_2_3(row, 1)
 
-    df['New_Delta_Ref_2.3'], df['Coeff'] = zip(*df.apply(apply_cal, axis=1))
+    df['New_Delta_Ref_2.3'], df['Coeff_2.3'] = zip(*df.apply(apply_cal, axis=1))
     return df
 
 #Function to calculate New_Delta based on reference of Ethanol_Max of 3 V
