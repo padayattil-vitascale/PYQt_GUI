@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import sys
-
+import re
 
 sys.path.append("C:\\Users\\jeric\\Desktop\\Joyson_decrypted\\Python script\\GUI_APP\\src")
 
@@ -15,7 +15,14 @@ from PyQt5.QtWidgets import QFileDialog, QMessageBox
 def load_data(folder_path):
     if folder_path:
         DF = pd.DataFrame()  # Empty dataframe to merge all the files
-        for file_name in sorted(os.listdir(folder_path)):
+
+        def extract_trailing_number(file_name):
+            match = re.search(r'-(\d+)', file_name)  # Extract number after '-'
+            return int(match.group(1)) if match else float('inf')  # Convert to integer for sorting
+
+        file_list = sorted([f for f in os.listdir(folder_path) if f.endswith(".csv")], key=extract_trailing_number)
+
+        for file_name in file_list:
             if file_name.endswith(".csv"):
                 file = os.path.join(folder_path, file_name)
                 # Load the data from the selected Excel file
