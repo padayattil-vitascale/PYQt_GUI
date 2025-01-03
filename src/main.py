@@ -94,7 +94,7 @@ class Joyson_prediction(QMainWindow):
         layout1.addWidget(self.distance_button, alignment= Qt.AlignCenter)
 
         #display PPM_graph button
-        self.filter_button = QPushButton('Filter_acetone', self)
+        self.filter_button = QPushButton('Filter_acetone & windspeed', self)
         self.filter_button.clicked.connect(self.filter_acetone_and_windspeed)
         self.filter_button.setFixedSize(150,30)
         #self.Graphs_button.setStyleSheet("border: 3px solid black")
@@ -195,8 +195,12 @@ class Joyson_prediction(QMainWindow):
         print('Distance Added')
 
     def correction_factor(self):
-        self.df = correction_calculation(self, self.df)
-        print('applied correction')
+        try:
+            if 'windspeed_corr' in self.df.columns:
+                self.df = correction_calculation(self, self.df)
+                print('applied correction')
+        except:
+            print('Do windspeed correction first')
 
     def filter_acetone_and_windspeed(self):
       self.df = apply_low_pass_filter(self.df)
@@ -221,7 +225,8 @@ class Joyson_prediction(QMainWindow):
             # using rc function
             #ax.rcParams.update({'font.size': 10})
             ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=0.5, label='PPM_Ref_2.3', color='b', marker = '*')
-            ax.plot(df['PPM_Peak_Ref_3'], linewidth=0.5, label='PPM_Ref_3', color='g', marker = '+')    
+            ax.plot(df['PPM_Peak_Ref_3'], linewidth=0.5, label='PPM_Ref_3', color='g', marker = '+')
+            ax.set_ylim(bottom = 0)    
             ax.title.set_text('PPM_2.3, PPM_3 & Windspeed')
             ax.set_ylabel('PPM Calculated', fontsize=9)
             ax.set_xlabel('Samples', fontsize=9)
@@ -233,6 +238,7 @@ class Joyson_prediction(QMainWindow):
             #ax2.rcParams.update({'font.size': 10})
             ax2 = ax.twinx()
             ax2.plot(df['windspeed'], color='r', linewidth=0.5, label='Windspeed')
+            ax2.set_ylim(bottom = 0)
             ax2.set_ylabel('Windspeed(m/s)', fontsize=9)
             lines_1, labels_1 = ax.get_legend_handles_labels()
             lines_2, labels_2 = ax2.get_legend_handles_labels()

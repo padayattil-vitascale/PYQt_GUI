@@ -71,6 +71,7 @@ def correction_calculation(parent, DF):
     DF = Calc_PPM.predict_ppm_on_distance(DF)               #PPM calculation for both references
     DF['PPM_Peak_Ref_2.3'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM_Ref_2.3'], DF['New_Delta_Ref_2.3'], DF['Windspeed_max'], i, window_size = 25) for i in range(len(DF))]
     DF['PPM_Peak_Ref_3'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM_Ref_3'], DF['New_Delta_Ref_3'], DF['Windspeed_max'], i, window_size = 25) for i in range(len(DF))]
+    DF['Blood Alcohol Content (g/L)'] = DF['PPM_Peak_Ref_2.3'] * 0.003864
     #breakpoint()
 
     # Save the results to an Excel file
@@ -78,8 +79,11 @@ def correction_calculation(parent, DF):
     result_file_path, _ = QFileDialog.getSaveFileName(parent, "Save File", "", "Excel files (*.xlsx);;All Files (*)", options=options)
     
     if result_file_path:
-        DF.to_excel(result_file_path, index= False)
-        QMessageBox.information(parent, "Success", "Results saved to " + result_file_path)
+        try:    
+            DF.to_excel(result_file_path, index= False)
+            QMessageBox.information(parent, "Success", "Results saved to " + result_file_path)
+        except Exception as e:
+            QMessageBox.critical(parent, "Error", f"Error in saving {str(e)}")
 
     return DF
 

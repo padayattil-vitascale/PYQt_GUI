@@ -10,6 +10,7 @@ def plot_other_graphs(df, folder_path):
         #markerstyles = ['v','o','+','*','.']
         ax.plot(y1, linewidth=0.5, label=y1_label, color='b')    
         ax.title.set_text(f"{y1_label} Vs {y2_label}")
+        ax.set_ylim(bottom = 0)
         ax.set_ylabel(y1_label, fontsize=9)
         ax.set_xlabel('Samples', fontsize=9)
         
@@ -20,6 +21,8 @@ def plot_other_graphs(df, folder_path):
 
         ax2 = ax.twinx()
         ax2.plot(y2, color='r', linewidth=0.5, label=y2_label)
+        if y2_label != 'Acetone':
+            ax2.set_ylim(bottom = 0)
         ax2.set_ylabel(y2_label, fontsize=9)
         lines_1, labels_1 = ax.get_legend_handles_labels()
         lines_2, labels_2 = ax2.get_legend_handles_labels()
