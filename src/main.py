@@ -44,8 +44,8 @@ class Joyson_prediction(QMainWindow):
         layout3 = QHBoxLayout()
         layout4 = QHBoxLayout()
 
-        #Load folder
-        self.load_button = QPushButton('Select File',self)
+        #Load folder for 1st time conversion
+        self.load_button = QPushButton('Select Folder',self)
         self.load_button.clicked.connect(self.load_file)
         self.load_button.setFixedSize(100, 30)
         #self.load_button.setStyleSheet("border: 3px solid black")
@@ -213,6 +213,7 @@ class Joyson_prediction(QMainWindow):
             ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=0.5, label='PPM_Ref_2.3', color='b', marker = '+')
             ax.plot(df['PPM_Peak_Ref_3'], linewidth=0.5, label='PPM_Ref_3', color='g', marker = 'o')    
             ax.title.set_text('PPM_Peaks_Ref_2.3, PPM_Peaks_Ref_3 & Windspeed')
+            ax.set_ylim(bottom = 0)
             ax.set_ylabel('PPM Calculated', fontsize=9)
             ax.set_xlabel('Samples', fontsize=9)
             xtick_labels = df.index
@@ -223,6 +224,7 @@ class Joyson_prediction(QMainWindow):
             #ax2.rcParams.update({'font.size': 10})
             ax2 = ax.twinx()
             ax2.plot(df['windspeed'], color='r', linewidth=0.5, label='Windspeed')
+            ax2.set_ylim(bottom = 0)
             ax2.set_ylabel('Windspeed(m/s)', fontsize=9)
             lines_1, labels_1 = ax.get_legend_handles_labels()
             lines_2, labels_2 = ax2.get_legend_handles_labels()

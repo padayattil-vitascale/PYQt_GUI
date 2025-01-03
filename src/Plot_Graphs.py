@@ -10,6 +10,7 @@ def plot_other_graphs(df, folder_path):
         #markerstyles = ['v','o','+','*','.']
         ax.plot(y1, linewidth=0.5, label=y1_label, color='b')    
         ax.title.set_text(f"{y1_label} Vs {y2_label}")
+        ax.set_ylim(bottom = 0)
         ax.set_ylabel(y1_label, fontsize=9)
         ax.set_xlabel('Samples', fontsize=9)
         
