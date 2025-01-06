@@ -224,8 +224,8 @@ class Joyson_prediction(QMainWindow):
         
             # using rc function
             #ax.rcParams.update({'font.size': 10})
-            ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=0.5, label='PPM_Ref_2.3', color='b', marker = '*')
-            ax.plot(df['PPM_Peak_Ref_3'], linewidth=0.5, label='PPM_Ref_3', color='g', marker = '+')
+            ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=1, label='PPM_Ref_2.3', color='b', marker = '*')
+            ax.plot(df['PPM_Peak_Ref_3'], linewidth=1, label='PPM_Ref_3', color='g', marker = '+')
             ax.set_ylim(bottom = 0)    
             ax.title.set_text('PPM_2.3, PPM_3 & Windspeed')
             ax.set_ylabel('PPM Calculated', fontsize=9)
@@ -237,7 +237,7 @@ class Joyson_prediction(QMainWindow):
 
             #ax2.rcParams.update({'font.size': 10})
             ax2 = ax.twinx()
-            ax2.plot(df['windspeed'], color='r', linewidth=0.5, label='Windspeed')
+            ax2.plot(df['windspeed'], color='r', linewidth=1, label='Windspeed')
             ax2.set_ylim(bottom = 0)
             ax2.set_ylabel('Windspeed(m/s)', fontsize=9)
             lines_1, labels_1 = ax.get_legend_handles_labels()

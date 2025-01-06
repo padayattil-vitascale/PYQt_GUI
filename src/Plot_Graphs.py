@@ -8,7 +8,7 @@ def plot_other_graphs(df, folder_path):
     def two_axis_line(y1, y2, df, y1_label, y2_label):
         fig, ax = plt.subplots(figsize=(6,3.5))
         #markerstyles = ['v','o','+','*','.']
-        ax.plot(y1, linewidth=0.5, label=y1_label, color='b')    
+        ax.plot(y1, linewidth=1, label=y1_label, color='b')    
         ax.title.set_text(f"{y1_label} Vs {y2_label}")
         ax.set_ylim(bottom = 0)
         ax.set_ylabel(y1_label, fontsize=9)
@@ -20,8 +20,8 @@ def plot_other_graphs(df, folder_path):
         ax.set_xticklabels(xtick_labels[::step], rotation=90, fontsize=7)
 
         ax2 = ax.twinx()
-        ax2.plot(y2, color='r', linewidth=0.5, label=y2_label)
-        if y2_label != 'Acetone':
+        ax2.plot(y2, color='r', linewidth=1, label=y2_label)
+        if y2_label not in ['Acetone', 'Temperature', 'Humidity']:
             ax2.set_ylim(bottom = 0)
         ax2.set_ylabel(y2_label, fontsize=9)
         lines_1, labels_1 = ax.get_legend_handles_labels()
