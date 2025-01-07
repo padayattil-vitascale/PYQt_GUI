@@ -3,6 +3,8 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
+import Plot_Draeger
+
 
 def plot_other_graphs(df, folder_path):
     def two_axis_line(y1, y2, df, y1_label, y2_label):
@@ -30,7 +32,7 @@ def plot_other_graphs(df, folder_path):
         lines = lines_1 + lines_2
         labels = labels_1 + labels_2
 
-        ax.legend(lines, labels, loc='upper right', bbox_to_anchor=(1.1, 1.1))
+        ax.legend(lines, labels, fontsize = 6, loc='upper right', bbox_to_anchor=(1.1, 1.1))
 
         plt.savefig(os.path.join(folder_path, f'{y1_label} VS {y2_label}.png'))
         fig = ax.get_figure()

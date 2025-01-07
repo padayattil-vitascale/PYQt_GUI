@@ -9,6 +9,7 @@ from Calc_PPM import *
 from Plot_Graphs import *
 from Low_pass_filter import *
 from windspeed_correction import *
+from Plot_Draeger import *
 
 from datetime import datetime
 
@@ -41,6 +42,8 @@ class Joyson_prediction(QMainWindow):
         layout2 = QHBoxLayout()
         layout2a = QHBoxLayout()
         layout3 = QHBoxLayout()
+        layout3a = QHBoxLayout()
+        layout3b = QHBoxLayout()
         layout4 = QHBoxLayout()
 
         #Load folder
@@ -114,6 +117,33 @@ class Joyson_prediction(QMainWindow):
         #self.correction_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.correction_button, alignment= Qt.AlignCenter)
 
+        #Enter starting Dräger values
+        self.draeger_start_text = QLabel()
+        self.draeger_start_text.setText('Enter Starting Dräger values:')
+        layout3a.addWidget(self.draeger_start_text)
+
+        self.input2 = QLineEdit(self)
+        self.input2.setPlaceholderText("Enter value in mg/L")
+        layout3a.addWidget(self.input2)
+
+        layout1.addLayout(layout3a)
+
+        #Enter end Dräger values
+        self.draeger_end_text = QLabel()
+        self.draeger_end_text.setText('Enter End Dräger values:')
+        layout3b.addWidget(self.draeger_end_text)
+
+        self.input4 = QLineEdit(self)
+        self.input4.setPlaceholderText("Enter value in mg/L")
+        layout3b.addWidget(self.input4)
+
+        self.draeger_button = QPushButton('Dräger Values', self)
+        self.draeger_button.clicked.connect(self.draeger_plot)
+        self.draeger_button.setFixedSize(150,30)
+        #self.PPM_button.setStyleSheet("border: 3px solid black")
+        layout3b.addWidget(self.draeger_button, alignment= Qt.AlignCenter)
+
+        layout1.addLayout(layout3b)
 
         #display PPM_graph
         self.PPM_button = QPushButton('PPM_graph', self)
@@ -210,8 +240,20 @@ class Joyson_prediction(QMainWindow):
       self.df = windspeed_corr(self.df)
       print('Windspeed_corrected')
 
+    def draeger_plot(self):
+        time1 = 0
+        value1 = self.input2.text()
+        time2 = self.df.shape[0]
+        value2 = self.input4.text()
 
-    #Display wordcloud
+        self.rect_start = draeger_values(time1, value1)
+        self.rect_end = draeger_values(time2, value2)
+        #return self.rect_start
+        #breakpoint()
+        #self.rect_mid = draeger_values(time, value)
+        #self.rect_end = draeger_values(time, value)
+
+    #Display PPM graph
     def show_PPM_graph(self):
             df = self.df
             # Ensure necessary columns are present
@@ -220,12 +262,17 @@ class Joyson_prediction(QMainWindow):
                 return
             plt.rcParams.update({'font.size': 10})
             fig, ax = plt.subplots(figsize=(6,3.5))
-            #markerstyles = ['v','o','+','*','.']
-        
+
             # using rc function
             #ax.rcParams.update({'font.size': 10})
             ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=1, label='PPM_Ref_2.3', color='b', marker = '*')
             ax.plot(df['PPM_Peak_Ref_3'], linewidth=1, label='PPM_Ref_3', color='g', marker = '+')
+
+            #breakpoint()
+            ax.add_patch(self.rect_start)  #rectangular path of dräger
+            #ax.add_patch(self.rect_mid)
+            ax.add_patch(self.rect_end)
+
             ax.set_ylim(bottom = 0)    
             ax.title.set_text('PPM_2.3, PPM_3 & Windspeed')
             ax.set_ylabel('PPM Calculated', fontsize=9)
@@ -246,7 +293,7 @@ class Joyson_prediction(QMainWindow):
             lines = lines_1 + lines_2
             labels = labels_1 + labels_2
 
-            ax.legend(lines, labels, loc='upper right', bbox_to_anchor=(1.1, 1.1))
+            ax.legend(lines, labels, fontsize = 6, loc='upper right', bbox_to_anchor=(1.1, 1.1))
             #ax.show()
 
             # Convert plot to image for display in PyQt widget
