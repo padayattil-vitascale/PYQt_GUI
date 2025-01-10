@@ -44,6 +44,7 @@ class Joyson_prediction(QMainWindow):
         layout3 = QHBoxLayout()
         layout3a = QHBoxLayout()
         layout3b = QHBoxLayout()
+        layout3c = QHBoxLayout()
         layout4 = QHBoxLayout()
 
         #Load folder
@@ -124,26 +125,45 @@ class Joyson_prediction(QMainWindow):
 
         self.input2 = QLineEdit(self)
         self.input2.setPlaceholderText("Enter value in mg/L")
+        self.input2.setFixedSize(150,20)
         layout3a.addWidget(self.input2)
 
         layout1.addLayout(layout3a)
 
+        #Enter mid Dräger values
+        self.draeger_mid_text = QLabel()
+        self.draeger_mid_text.setText('Enter Dräger values with time:')
+        layout3b.addWidget(self.draeger_mid_text)
+
+        self.input3 = QLineEdit(self)
+        self.input3.setPlaceholderText("Enter time in minutes ")
+        self.input3.setFixedSize(150,20)
+        layout3b.addWidget(self.input3)
+
+        self.input5 = QLineEdit(self)
+        self.input5.setPlaceholderText("Enter value in mg/L")
+        self.input5.setFixedSize(150,20)
+        layout3b.addWidget(self.input5)
+
+        layout1.addLayout(layout3b)
+
         #Enter end Dräger values
         self.draeger_end_text = QLabel()
         self.draeger_end_text.setText('Enter End Dräger values:')
-        layout3b.addWidget(self.draeger_end_text)
+        layout3c.addWidget(self.draeger_end_text)
 
         self.input4 = QLineEdit(self)
         self.input4.setPlaceholderText("Enter value in mg/L")
-        layout3b.addWidget(self.input4)
+        self.input4.setFixedSize(150,20)
+        layout3c.addWidget(self.input4)
 
         self.draeger_button = QPushButton('Dräger Values', self)
         self.draeger_button.clicked.connect(self.draeger_plot)
         self.draeger_button.setFixedSize(150,30)
         #self.PPM_button.setStyleSheet("border: 3px solid black")
-        layout3b.addWidget(self.draeger_button, alignment= Qt.AlignCenter)
+        layout3c.addWidget(self.draeger_button)
 
-        layout1.addLayout(layout3b)
+        layout1.addLayout(layout3c)
 
         #display PPM_graph
         self.PPM_button = QPushButton('PPM_graph', self)
@@ -245,8 +265,11 @@ class Joyson_prediction(QMainWindow):
         value1 = self.input2.text()
         time2 = self.df.shape[0]
         value2 = self.input4.text()
+        time3 = float(self.input3.text()) * 600
+        value3 = self.input5.text()
 
         self.rect_start = draeger_values(time1, value1)
+        self.rect_mid = draeger_values(time3, value3)
         self.rect_end = draeger_values(time2, value2)
         #return self.rect_start
         #breakpoint()
@@ -265,12 +288,12 @@ class Joyson_prediction(QMainWindow):
 
             # using rc function
             #ax.rcParams.update({'font.size': 10})
-            ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=1, label='PPM_Ref_2.3', color='b', marker = '*')
-            ax.plot(df['PPM_Peak_Ref_3'], linewidth=1, label='PPM_Ref_3', color='g', marker = '+')
+            ax.plot(df['PPM_Peak_Ref_2.3'], linewidth=1, label='PPM_Ref_2.3', color='b', marker = '*', markersize = 9)
+            ax.plot(df['PPM_Peak_Ref_3'], linewidth=1, label='PPM_Ref_3', color='g', marker = '+', markersize = 9)
 
             #breakpoint()
             ax.add_patch(self.rect_start)  #rectangular path of dräger
-            #ax.add_patch(self.rect_mid)
+            ax.add_patch(self.rect_mid)
             ax.add_patch(self.rect_end)
 
             ax.set_ylim(bottom = 0)    
