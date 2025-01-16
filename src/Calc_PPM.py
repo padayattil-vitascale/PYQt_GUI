@@ -76,10 +76,10 @@ def predict_ppm_on_distance(df):
                 expo = 0.1185 * math.log(row['Windspeed_max']) + 2.65
             elif 0.32 < row['Windspeed_max'] <= 0.51:
                 const = 9.84 * math.log(row['Windspeed_max']) + 73.55
-                expo = 0.156 * math.log(row['Windspeed_max']) + 2.54
+                expo = 0.156 * math.log(row['Windspeed_max']) + 2.54 
             else:
                 const = 45 * math.log(row['Windspeed_max']) + 105.6
-                expo = -0.405 * math.log(row['Windspeed_max']) + 2.12
+                expo = -0.405 * math.log(row['Windspeed_max']) + 2.12 
         else:
             const = 1.0
             expo = 1.0
@@ -159,10 +159,10 @@ def predict_ppm_on_distance(df):
                 expo = 0.1185 * math.log(row['Windspeed_max']) + 2.65
             elif 0.32 < row['Windspeed_max'] <= 0.51:
                 const = (9.84 * math.log(row['Windspeed_max']) + 73.55)/2.3
-                expo = 0.156 * math.log(row['Windspeed_max']) + 2.54
+                expo = 0.156 * math.log(row['Windspeed_max']) + 2.54 
             else:
                 const = (45 * math.log(row['Windspeed_max']) + 105.6)/2.3
-                expo = -0.405 * math.log(row['Windspeed_max']) + 2.12
+                expo = -0.405 * math.log(row['Windspeed_max']) + 2.12 
         else:
             const = 1.0
             expo = 1.0

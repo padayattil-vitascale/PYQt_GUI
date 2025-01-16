@@ -5,7 +5,7 @@ import numpy as np
 
 def Cal_New_delta_2_3(row, coeff_2_3):
     new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_2.3'] * coeff_2_3)
-    #new_delta += 0.3
+    #new_delta += 0.35
     return new_delta, coeff_2_3
 
 def Calc_coeff_2_3(df):
@@ -76,7 +76,7 @@ def Calc_coeff_2_3(df):
 
 def Cal_New_delta_3(row, coeff_3):
     new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_3'] * coeff_3)
-    #new_delta += 0.3
+    #new_delta += 0.35
     return new_delta, coeff_3
 
 def Calc_coeff_3(df):
@@ -159,4 +159,4 @@ def compute_peak(series, delta_series, windspeed_series, current_index, window_s
     delta_condition_value = delta_series[current_index]
     windspeed_condition_value = windspeed_series[current_index]
     # Check if the current value is equal to the maximum in the window
-    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.01) else np.nan
+    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.02) else np.nan
