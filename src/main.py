@@ -96,7 +96,7 @@ class Joyson_prediction(QMainWindow):
 
         #display PPM_graph button
         self.filter_button = QPushButton('Filter_acetone', self)
-        self.filter_button.clicked.connect(self.filter_acetone_and_windspeed)
+        self.filter_button.clicked.connect(self.filter_acetone_windspeed_ethanol)
         self.filter_button.setFixedSize(150,30)
         #self.Graphs_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.filter_button, alignment= Qt.AlignCenter)
@@ -192,9 +192,9 @@ class Joyson_prediction(QMainWindow):
         self.df = correction_calculation(self, self.df)
         print('applied correction')
 
-    def filter_acetone_and_windspeed(self):
+    def filter_acetone_windspeed_ethanol(self):
       self.df = apply_low_pass_filter(self.df)
-      print('Acetone & windspeed filtered')
+      print('Acetone,Ethanol & windspeed filtered')
 
 
     #Display wordcloud
