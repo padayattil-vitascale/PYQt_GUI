@@ -57,11 +57,11 @@ def add_distance(df, dist):
 
 def correction_calculation(parent, DF):
     # Apply function across all rows and store result in a new column 'Max'
-    DF['Max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['Ethanol'], i, window_size = 75) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 70 samples
+    DF['Max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['filtered_ethanol'], i, window_size = 75) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 70 samples
     
     DF['Windspeed_max'] = [Correction_Factor_Calculation.compute_max_rolling(DF['windspeed_corr'], i, window_size = 42) for i in range(len(DF))]     #Set the rolling window to selec the MAx out of last 35 samples
     
-    DF['Min'] = DF['Ethanol']
+    DF['Min'] = DF['filtered_ethanol']
     DF['Old_delta'] = DF['Max'] - DF['Min']
 
     DF['Max_Deviation_Ref_2.3'] = DF['Max'] - 2.3
@@ -71,7 +71,8 @@ def correction_calculation(parent, DF):
     DF = Calc_PPM.predict_ppm_on_distance(DF)               #PPM calculation for both references
     DF['PPM_Peak_Ref_2.3'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM_Ref_2.3'], DF['New_Delta_Ref_2.3'], DF['Windspeed_max'], i, window_size = 25) for i in range(len(DF))]
     DF['PPM_Peak_Ref_3'] = [Correction_Factor_Calculation.compute_peak(DF['Calculated_PPM_Ref_3'], DF['New_Delta_Ref_3'], DF['Windspeed_max'], i, window_size = 25) for i in range(len(DF))]
-    DF['Blood Alcohol Content (g/L)'] = DF['PPM_Peak_Ref_2.3'] * 0.003864
+    DF['Blood Alcohol Content(2.3) (g/L)'] = DF['PPM_Peak_Ref_2.3'] * 0.003864
+    DF['Blood Alcohol Content(3) (g/L)'] = DF['PPM_Peak_Ref_3'] * 0.003864
     #breakpoint()
 
     # Save the results to an Excel file
@@ -91,4 +92,5 @@ def correction_calculation(parent, DF):
 def apply_low_pass_filter(df):
     df['filtered_Acethone'] = Low_pass_filter.low_pass_filtered(df['Acethone'])
     df['filtered_windspeed'] = Low_pass_filter.low_pass_filtered(df['windspeed'])   #Caution if windspeed has to be filtered, first filter the windpseed and then apply the correction
+    df['filtered_ethanol'] = Low_pass_filter.low_pass_filtered(df['Ethanol'])
     return df

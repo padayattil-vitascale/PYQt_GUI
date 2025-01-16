@@ -5,7 +5,7 @@ import numpy as np
 
 def Cal_New_delta_2_3(row, coeff_2_3):
     new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_2.3'] * coeff_2_3)
-    #new_delta += 0.35
+    new_delta += 0.35
     return new_delta, coeff_2_3
 
 def Calc_coeff_2_3(df):
@@ -76,7 +76,7 @@ def Calc_coeff_2_3(df):
 
 def Cal_New_delta_3(row, coeff_3):
     new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_3'] * coeff_3)
-    #new_delta += 0.35
+    new_delta += 0.35
     return new_delta, coeff_3
 
 def Calc_coeff_3(df):
