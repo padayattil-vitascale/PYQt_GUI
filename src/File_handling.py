@@ -96,4 +96,5 @@ def correction_calculation(parent, DF):
 def apply_low_pass_filter(df):
     df['filtered_Acethone'] = Low_pass_filter.low_pass_filtered(df['Acethone'])
     df['filtered_windspeed'] = Low_pass_filter.low_pass_filtered(df['windspeed'])
+    df['filtered_ethanol'] = Low_pass_filter.low_pass_filtered(df['Ethanol'])
     return df
