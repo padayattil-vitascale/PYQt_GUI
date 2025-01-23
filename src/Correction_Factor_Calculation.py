@@ -1,15 +1,29 @@
 import pandas as pd
 import numpy as np
+import math
 
 #Function to calculate
 
 def Cal_New_delta_2_3(row, coeff_2_3):
     new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_2.3'] * coeff_2_3)
-    #new_delta += 0.45
+    #new_delta += 0.5
     return new_delta, coeff_2_3
 
 def Calc_coeff_2_3(df):
     def apply_cal(row):
+        if row['Max_Deviation_Ref_2.3'] < -0.3 or row['Max_Deviation_Ref_2.3'] > 0.3:
+            coeff = math.log(-0.0016 * row['Distance'] + 2.4829)
+            return Cal_New_delta_2_3(row, coeff)
+        elif -0.3 < row['Max_Deviation_Ref_2.3'] < -0.05:
+            coeff = math.log(-0.0011 * row['Distance'] + 2.2014)
+            return Cal_New_delta_2_3(row, coeff)
+        elif 0.05 < row['Max_Deviation_Ref_2.3'] < 0.3:
+            coeff = math.log(-0.0014 * row['Distance'] + 2.7005)
+            return Cal_New_delta_2_3(row, coeff)
+        else:
+            coeff = 1
+            return Cal_New_delta_2_3(row, coeff)
+        """
         if (row['Distance'] == 200) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] < 0.3)):
             return Cal_New_delta_2_3(row, 0.85)
         elif (row['Distance'] == 200) and (row['Max_Deviation_Ref_2.3'] > 0.05 and (row['Max_Deviation_Ref_2.3'] > 0.3)):
@@ -68,7 +82,7 @@ def Calc_coeff_2_3(df):
             return Cal_New_delta_2_3(row, 0.5)
         else:
             return Cal_New_delta_2_3(row, 1)
-
+"""
     df['New_Delta_Ref_2.3'], df['Coeff_2.3'] = zip(*df.apply(apply_cal, axis=1))
     return df
 
@@ -76,11 +90,24 @@ def Calc_coeff_2_3(df):
 
 def Cal_New_delta_3(row, coeff_3):
     new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_3'] * coeff_3)
-    #new_delta += 0.45
+    #new_delta += 0.5
     return new_delta, coeff_3
 
 def Calc_coeff_3(df):
     def apply_cal(row):
+        if row['Max_Deviation_Ref_3'] < -0.3 or row['Max_Deviation_Ref_3'] > 0.3:
+            coeff = math.log(-0.0016 * row['Distance'] + 2.4829)
+            return Cal_New_delta_3(row, coeff)
+        elif -0.3 < row['Max_Deviation_Ref_3'] < -0.05:
+            coeff = math.log(-0.0011 * row['Distance'] + 2.2014)
+            return Cal_New_delta_3(row, coeff)
+        elif 0.05 < row['Max_Deviation_Ref_3'] < 0.3:
+            coeff = math.log(-0.0014 * row['Distance'] + 2.7005)
+            return Cal_New_delta_3(row, coeff)
+        else:
+            coeff = 1
+            return Cal_New_delta_3(row, coeff)
+        """
         if (row['Distance'] == 200) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] < 0.3)):
             return Cal_New_delta_3(row, 0.85)
         elif (row['Distance'] == 200) and (row['Max_Deviation_Ref_3'] > 0.1 and (row['Max_Deviation_Ref_3'] > 0.3)):
@@ -139,7 +166,7 @@ def Calc_coeff_3(df):
             return Cal_New_delta_3(row, 0.5)
         else:
             return Cal_New_delta_3(row, 1)
-
+"""
     df['New_Delta_Ref_3'], df['Coeff_3'] = zip(*df.apply(apply_cal, axis=1))
     return df
 
