@@ -16,16 +16,16 @@ def predict_ppm_on_distance(df):
         const = 0
         expo = 0
 
-        if  row['Windspeed_max'] < (-0.0008*row['Distance'] + 0.6879):
-            CL = -0.0187*(row['Distance']) + 14.769
-            CC = math.exp(0.7414*(math.log(row['Distance'])) - 0.5273)
-            EL =  0.0014*row['Distance'] - 0.5566
-            EC = 0.0015*row['Distance'] + 1.8832
+        if  row['Windspeed_max'] < (-0.0008*row['shifted_Distance'] + 0.6879):
+            CL = -0.0187*(row['shifted_Distance']) + 14.769
+            CC = math.exp(0.7414*(math.log(row['shifted_Distance'])) - 0.5273)
+            EL =  0.0014*row['shifted_Distance'] - 0.5566
+            EC = 0.0015*row['shifted_Distance'] + 1.8832
             const = CL*math.log(row['Windspeed_max']) + CC
             expo = EL*math.log(row['Windspeed_max']) + EC
-            if row['Distance'] < 250:
+            if row['shifted_Distance'] < 250:
                 expo = expo *1.09
-            elif row['Distance'] > 300:
+            elif row['shifted_Distance'] > 300:
                 expo = expo *0.96
             else:
                 expo = expo
@@ -118,22 +118,22 @@ def predict_ppm_on_distance(df):
         expo = 0
 
         #equation for 25-75slm
-        if  row['Windspeed_max'] < (-0.0008*row['Distance'] + 0.6879):
-            CL = -0.0187*(row['Distance']) + 14.769
-            CC = math.exp(0.7414*(math.log(row['Distance'])) - 0.5273)
-            EL =  0.0014*row['Distance'] - 0.5566
-            EC = 0.0015*row['Distance'] + 1.8832
+        if  row['Windspeed_max'] < (-0.0008*row['shifted_Distance'] + 0.6879):
+            CL = -0.0187*(row['shifted_Distance']) + 14.769
+            CC = math.exp(0.7414*(math.log(row['shifted_Distance'])) - 0.5273)
+            EL =  0.0014*row['shifted_Distance'] - 0.5566
+            EC = 0.0015*row['shifted_Distance'] + 1.8832
             const = CL*math.log(row['Windspeed_max']) + CC
             if const <= 0:
                 const = 0
             else:
                 #3.3 reference correction equation
-                Ref_correction = -0.0027*row['Distance'] + 2.57
+                Ref_correction = -0.0027*row['shifted_Distance'] + 2.57
                 const = math.log(const) - Ref_correction                #to change reference from 2.3 to 3.3
             expo = EL*math.log(row['Windspeed_max']) + EC
-            if row['Distance'] < 250:
+            if row['shifted_Distance'] < 250:
                 expo = expo *1.09
-            elif row['Distance'] > 300:
+            elif row['shifted_Distance'] > 300:
                 expo = expo *0.96
             else:
                 expo = expo

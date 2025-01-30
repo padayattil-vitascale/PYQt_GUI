@@ -13,17 +13,17 @@ import math
 
 def windspeed_corr(df):
     def apply_corr(row):
-        if row['filtered_windspeed'] < (-0.129 * math.log(row['Distance']) + 0.872):  # Low windspeeds are not corrected..equation to the minimum windspeed
+        if row['filtered_windspeed'] < (-0.129 * math.log(row['shifted_Distance']) + 0.872):  # Low windspeeds are not corrected..equation to the minimum windspeed
             row['windspeed_corr'] = row['filtered_windspeed']
             return row['windspeed_corr']
-        elif row['filtered_windspeed'] > (-0.129 * math.log(row['Distance']) + 0.872) and row['Distance'] <= 450:
-            C = math.log(-0.0043*(row['Distance']) + 6.6584)
-            T = math.log(-0.0018*(row['Distance'])  + 4.1475)
+        elif row['filtered_windspeed'] > (-0.129 * math.log(row['shifted_Distance']) + 0.872) and row['shifted_Distance'] <= 450:
+            C = math.log(-0.0043*(row['shifted_Distance']) + 6.6584)
+            T = math.log(-0.0018*(row['shifted_Distance'])  + 4.1475)
             row['windspeed_corr'] = C*pow(row['filtered_windspeed'], T)
             return row['windspeed_corr']
-        elif row['filtered_windspeed'] > (-0.129 * math.log(row['Distance']) + 0.872) and row['Distance'] < 450:
-            C = math.log(0.0133 *(row['Distance']) - 0.691)
-            T = math.log(0.0035 *(row['Distance']) + 1.9333)
+        elif row['filtered_windspeed'] > (-0.129 * math.log(row['shifted_Distance']) + 0.872) and row['shifted_Distance'] < 450:
+            C = math.log(0.0133 *(row['shifted_Distance']) - 0.691)
+            T = math.log(0.0035 *(row['shifted_Distance']) + 1.9333)
             row['windspeed_corr'] = C*pow(row['filtered_windspeed'], T)
             return row['windspeed_corr']
 

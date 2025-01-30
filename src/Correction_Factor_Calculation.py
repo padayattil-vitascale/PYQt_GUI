@@ -6,19 +6,19 @@ import math
 
 def Cal_New_delta_2_3(row, coeff_2_3):
     new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_2.3'] * coeff_2_3)
-    new_delta += 0.1
+    #new_delta += 0.1
     return new_delta, coeff_2_3
 
 def Calc_coeff_2_3(df):
     def apply_cal(row):
         if row['Max_Deviation_Ref_2.3'] < -0.3 or row['Max_Deviation_Ref_2.3'] > 0.3:
-            coeff = math.log(-0.0016 * row['Distance'] + 2.4829)
+            coeff = math.log(-0.0016 * row['shifted_Distance'] + 2.4829)
             return Cal_New_delta_2_3(row, coeff)
         elif -0.3 < row['Max_Deviation_Ref_2.3'] < -0.05:
-            coeff = math.log(-0.0011 * row['Distance'] + 2.2014)
+            coeff = math.log(-0.0011 * row['shifted_Distance'] + 2.2014)
             return Cal_New_delta_2_3(row, coeff)
         elif 0.05 < row['Max_Deviation_Ref_2.3'] < 0.3:
-            coeff = math.log(-0.0014 * row['Distance'] + 2.7005)
+            coeff = math.log(-0.0014 * row['shifted_Distance'] + 2.7005)
             return Cal_New_delta_2_3(row, coeff)
         else:
             coeff = 1
@@ -90,19 +90,19 @@ def Calc_coeff_2_3(df):
 
 def Cal_New_delta_3(row, coeff_3):
     new_delta = row['Old_delta'] - (row['Max_Deviation_Ref_3'] * coeff_3)
-    new_delta += 0.1
+    #new_delta += 0.1
     return new_delta, coeff_3
 
 def Calc_coeff_3(df):
     def apply_cal(row):
         if row['Max_Deviation_Ref_3'] < -0.3 or row['Max_Deviation_Ref_3'] > 0.3:
-            coeff = math.log(-0.0016 * row['Distance'] + 2.4829)
+            coeff = math.log(-0.0016 * row['shifted_Distance'] + 2.4829)
             return Cal_New_delta_3(row, coeff)
         elif -0.3 < row['Max_Deviation_Ref_3'] < -0.05:
-            coeff = math.log(-0.0011 * row['Distance'] + 2.2014)
+            coeff = math.log(-0.0011 * row['shifted_Distance'] + 2.2014)
             return Cal_New_delta_3(row, coeff)
         elif 0.05 < row['Max_Deviation_Ref_3'] < 0.3:
-            coeff = math.log(-0.0014 * row['Distance'] + 2.7005)
+            coeff = math.log(-0.0014 * row['shifted_Distance'] + 2.7005)
             return Cal_New_delta_3(row, coeff)
         else:
             coeff = 1
@@ -186,4 +186,4 @@ def compute_peak(series, delta_series, windspeed_series, current_index, window_s
     delta_condition_value = delta_series[current_index]
     windspeed_condition_value = windspeed_series[current_index]
     # Check if the current value is equal to the maximum in the window
-    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.02) else np.nan
+    return current_value if (current_value == max_temp) and (delta_condition_value >= 0) and (windspeed_condition_value >= 0.03) else np.nan
