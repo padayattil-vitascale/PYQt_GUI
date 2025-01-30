@@ -10,6 +10,7 @@ from Plot_Graphs import *
 from Low_pass_filter import *
 from windspeed_correction import *
 from Plot_Draeger import *
+from select_distance import *
 
 from datetime import datetime
 
@@ -81,22 +82,29 @@ class Joyson_prediction(QMainWindow):
         self.distance_text.setText('Select distance from the steering board:')
         layout3.addWidget(self.distance_text)
 
+        #display data
+        self.distance_button = QPushButton('select Distance file',self)
+        self.distance_button.clicked.connect(self.select_distance_file)
+        self.distance_button.setFixedSize(200,30)
+        #self.CSV_button.setStyleSheet("border: 3px solid black")
+        layout3.addWidget(self.distance_button, alignment= Qt.AlignCenter)
+        """
         #select distance from options
         self.distance_options = QComboBox(self)
         self.distance_options.addItems(["200", "250", "300", "350", "400", "450", "500"])
         #self.distance_options.setFixedSize(200,30)
         #self.distance_options.setStyleSheet("border: 3px solid black")
         layout3.addWidget(self.distance_options)
-        
+        """       
         layout1.addLayout(layout3, stretch=2)
-
+        """
         #Add distance to the dataframe
         self.distance_button = QPushButton('Add_distance', self)
         self.distance_button.clicked.connect(self.show_distance)
         self.distance_button.setFixedSize(150,30)
         #self.distance_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.distance_button, alignment= Qt.AlignCenter)
-
+"""
         #display PPM_graph button
         self.filter_button = QPushButton('Filter_acetone,ethanol & windspeed', self)
         self.filter_button.clicked.connect(self.filter_acetone_ethanol_windspeed)
@@ -251,6 +259,19 @@ class Joyson_prediction(QMainWindow):
                 print('applied correction')
         except:
             print('Do windspeed correction first')
+
+    def select_distance_file(self):
+        options = QFileDialog.Options()
+        file_filter = "All Files (*)"
+        self.distance_file, _ = QFileDialog.getOpenFileName(self, "Select Folder")
+        if not self.distance_file:
+            QMessageBox.critical(self, "Error", "Please select a distance file first.")
+        elif self.distance_file:
+            self.df_distance_actual = distance_file(self.distance_file)
+            
+            self.df = pd.concat([self.data, self.df_distance_actual], axis = 1)
+
+            self.Load_status.setText(f'file:{self.folder_path}')
 
     def filter_acetone_ethanol_windspeed(self):
       self.df = apply_low_pass_filter(self.df)

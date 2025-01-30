@@ -1,7 +1,13 @@
 import math
 
-def cal_ppm(new_delta: float, constant: float, expo: float) -> float:
+def cal_ppm_2_3(new_delta: float, constant: float, expo: float) -> float:
     row_new = constant * math.exp(expo * new_delta)
+    #row_new  = math.exp(constant + (expo * new_delta))
+    return row_new
+
+def cal_ppm_3(new_delta: float, constant: float, expo: float) -> float:
+    #row_new = constant * math.exp(expo * new_delta)
+    row_new  = math.exp(constant + (expo * new_delta))
     return row_new
 
 def predict_ppm_on_distance(df):
@@ -10,6 +16,24 @@ def predict_ppm_on_distance(df):
         const = 0
         expo = 0
 
+        if  row['Windspeed_max'] < (-0.0008*row['Distance'] + 0.6879):
+            CL = -0.0187*(row['Distance']) + 14.769
+            CC = math.exp(0.7414*(math.log(row['Distance'])) - 0.5273)
+            EL =  0.0014*row['Distance'] - 0.5566
+            EC = 0.0015*row['Distance'] + 1.8832
+            const = CL*math.log(row['Windspeed_max']) + CC
+            expo = EL*math.log(row['Windspeed_max']) + EC
+            if row['Distance'] < 250:
+                expo = expo *1.09
+            elif row['Distance'] > 300:
+                expo = expo *0.96
+            else:
+                expo = expo
+        else:
+            const = 1
+            expo = 1
+
+        """
         if row['Distance'] == 200:
             if row['Windspeed_max'] <= 0.74:
                 const = 10.984 * math.log(row['Windspeed_max']) + 30.714
@@ -83,8 +107,8 @@ def predict_ppm_on_distance(df):
         else:
             const = 1.0
             expo = 1.0
-        
-        ppm_2_3 = cal_ppm(new_delta=row['New_Delta_Ref_2.3'], constant=const, expo=expo)
+        """
+        ppm_2_3 = cal_ppm_2_3(new_delta=row['New_Delta_Ref_2.3'], constant=const, expo=expo)
 
         return ppm_2_3
 
@@ -93,6 +117,30 @@ def predict_ppm_on_distance(df):
         const = 0
         expo = 0
 
+        #equation for 25-75slm
+        if  row['Windspeed_max'] < (-0.0008*row['Distance'] + 0.6879):
+            CL = -0.0187*(row['Distance']) + 14.769
+            CC = math.exp(0.7414*(math.log(row['Distance'])) - 0.5273)
+            EL =  0.0014*row['Distance'] - 0.5566
+            EC = 0.0015*row['Distance'] + 1.8832
+            const = CL*math.log(row['Windspeed_max']) + CC
+            if const <= 0:
+                const = 0
+            else:
+                #3.3 reference correction equation
+                Ref_correction = -0.0027*row['Distance'] + 2.57
+                const = math.log(const) - Ref_correction                #to change reference from 2.3 to 3.3
+            expo = EL*math.log(row['Windspeed_max']) + EC
+            if row['Distance'] < 250:
+                expo = expo *1.09
+            elif row['Distance'] > 300:
+                expo = expo *0.96
+            else:
+                expo = expo
+        else:
+            const = 1
+            expo = 1
+        """
         if row['Distance'] == 200:
             if row['Windspeed_max'] <= 0.74:
                 const = (10.984 * math.log(row['Windspeed_max']) + 30.714)/4
@@ -166,8 +214,8 @@ def predict_ppm_on_distance(df):
         else:
             const = 1.0
             expo = 1.0
-        
-        ppm_3 = cal_ppm(new_delta=row['New_Delta_Ref_3'], constant=const, expo=expo)
+        """
+        ppm_3 = cal_ppm_3(new_delta=row['New_Delta_Ref_3'], constant=const, expo=expo)
 
         return ppm_3
     

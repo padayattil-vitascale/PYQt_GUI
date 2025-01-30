@@ -65,7 +65,7 @@ def correction_calculation(parent, DF):
     DF['Old_delta'] = DF['Max'] - DF['Min']
 
     DF['Max_Deviation_Ref_2.3'] = DF['Max'] - 2.3
-    DF['Max_Deviation_Ref_3'] = DF['Max'] - 3
+    DF['Max_Deviation_Ref_3'] = DF['Max'] - 3.3
     DF = Correction_Factor_Calculation.Calc_coeff_2_3(DF)
     DF = Correction_Factor_Calculation.Calc_coeff_3(DF)
     DF = Calc_PPM.predict_ppm_on_distance(DF)               #PPM calculation for both references
@@ -93,4 +93,5 @@ def apply_low_pass_filter(df):
     df['filtered_Acethone'] = Low_pass_filter.low_pass_filtered(df['Acethone'])
     df['filtered_windspeed'] = Low_pass_filter.low_pass_filtered(df['windspeed'])   #Caution if windspeed has to be filtered, first filter the windpseed and then apply the correction
     df['filtered_ethanol'] = Low_pass_filter.low_pass_filtered(df['Ethanol'])
+    
     return df
